@@ -1,6 +1,6 @@
-==============================================================================
+===============================
 Performance Testing with jMeter
-==============================================================================
+===============================
 
 Introduction
 ------------
@@ -36,7 +36,7 @@ Elements of a minimal test plan:
 
     * Thread Group
 
-      The root element of every test plan. Simulatest the (concurrent) users
+      The root element of every test plan. Simulates the (concurrent) users
       than run all requests. Each thread simulates a single user.
 
     * HTTP Request Default (Configuration Element)
@@ -47,7 +47,7 @@ Elements of a minimal test plan:
 
 Test Plan:
 
-    Testplan > Add > Threads (Users) > Thread-Gruppe (this might vary
+    Testplan > Add > Threads (Users) > Thread-Group (this might vary
     dependent on the jMeter version you are using)
 
     Name: Users
