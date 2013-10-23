@@ -6,8 +6,6 @@
 Plone Performance Testing
 =========================
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
