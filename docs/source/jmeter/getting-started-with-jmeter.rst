@@ -21,8 +21,8 @@ of your distribution (e.g. on Debian/Ubuntu)::
    http://jmeter.apache.org/usermanual/get-started.html
 
 
-Step 2 : Create a minimal Testplan
-----------------------------------
+Step 2 : Create a Test Plan
+---------------------------
 
 Once you've started jMeter (e.g. by typing "jmeter" into the command line)
 you will see an empty Testplan:
@@ -45,7 +45,9 @@ Elements of a minimal test plan:
 
     * Summary Report (Listener)
 
-Test Plan:
+
+Step 3: Create a Thread Group
+-----------------------------
 
     Testplan > Add > Threads (Users) > Thread-Group (this might vary
     dependent on the jMeter version you are using)
@@ -54,6 +56,15 @@ Test Plan:
     Number of Threads (users): 2
     Ramp-Up Period (in seconds): 1
     Loop Count: 10
+
+.. figure::  jmeter-testplan-thread-group.png
+   :align:   center
+
+   Thread Group
+
+
+Step 4: Create HTTP Request Defaults
+------------------------------------
 
     Testplan > Users > Add > Config Element > HTTP Request Defaults
 
@@ -64,68 +75,57 @@ Test Plan:
 
     (The values are just defaults, not prefixes)
 
+.. figure::  jmeter-testplan-http-request-defaults.png
+   :align:   center
+
+   HTTP Request Defaults
+
+
+Step 5: Create an HTTP Request
+------------------------------
+
+   Thread Group
+
     Testplan > Users > Add > Sampler > HTTP Request
 
     Name: Front-page
     Path: /Plone/front-page
 
+.. figure::  jmeter-testplan-http-request.png
+   :align:   center
+
+   HTTP Request
+
+
+Step 6: Aggregate Graph
+-----------------------
+
     Testplan > Users > Add > Listener > Aggregate Graph
+
+.. figure::  jmeter-testplan-aggregate-graph.png
+   :align:   center
+
+   HTTP Request
+
+Step 6: View Results Tree
+-------------------------
 
     Testplan > Users > Add > Listener > View Results Tree (optional)
 
-Save Test Plan:
+
+Step 7: Save Test Plan
+----------------------
 
     File > Save Testplan as
 
-Run Test:
+Step 8: Run Performance Tests
+-----------------------------
 
     Run > Start
+
+Next Steps
+----------
 
 Creating a test plan:
 
 http://jmeter.apache.org/usermanual/build-web-test-plan.html
-
-
-Step 3: Run jMeter Tests on Jenkins
------------------------------------
-
-  * Install jMeter on your Jenkins machine. Or even better install it on a
-    dedicated performance testing machine to make sure your performance tests
-    are not affected by other server processes.
-
-  * Install the Jenkins Performance Plugin: https://wiki.jenkins-ci.org/display/JENKINS/Performance+Plugin
-
-  * Create a "New Free-Style Jenkins Job":
-    Name: myproject-performance-test-dev
-
-  * Source-Code-Management > Git > Repositories: git@bitbucket.org:tisto/myproject.git
-
-  * Source-Code-Management > Git > Branches to build: master
-
-  * Build > Add Build > Shell > Befehl: jmeter -n -t etc/myproject.jmx -l results.jtl
-
-    https://issues.jenkins-ci.org/browse/JENKINS-16627
-
-  * Post-Build-Actions > Add post-build action > Publish Performance test result report
-
-  * Post-Build-Actions > Publish Performance test result report > Add a new report: jMeterj
-
-  * Post-Build-Actions > Publish Performance test result report > Performance report > jMeter > Report files: **/*.jtl
-
-
-Performance: Failed to parse /srv/www/jenkins/.../myproject.jtl: Content is not allowed in prolog.
-
-
-Record Test
------------
-
-jMeter:
-
-    Workbench > Add > Non Test Elements > HTTP Proxy Server
-
-    Workbench > HTTP Proxy Server > Add > Logic Controller > Simple Controller
-
-Firefox:
-
-    Bearbeiten > Einstellungen > Erweitert >
-    Network (TAB) > Einstellungen > Manuelle Proxy Konfiguration
