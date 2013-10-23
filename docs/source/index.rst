@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   getting-started-with-jmeter.rst
+   jmeter/getting-started-with-jmeter.rst
 
 
 Indices and tables
