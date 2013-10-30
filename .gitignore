@@ -9,7 +9,7 @@
 /dist
 /local.cfg
 .coverage
-/*.egg-info
+*.egg-info
 /.installed.cfg
 *.pyc
 /.Python
@@ -18,10 +18,9 @@
 /.project
 /.pydevproject
 /.mr.developer.cfg
-/src/plone*
-/src/collective*
 *.mo
 docs/Makefile
 docs/make.bat
 docs/doctrees
 docs/html
+Paste*
