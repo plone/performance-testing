@@ -4,6 +4,9 @@ from zope.component.hooks import getSite
 from plone.app.textfield.value import RichTextValue
 from plone.dexterity.interfaces import IDexterityContent
 
+import os
+
+
 LOREMIPSUM_HTML_10_PARAGRAPHS = '''<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
 <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
@@ -34,6 +37,32 @@ def set_text(obj):
         )
     else:
         obj.setText(LOREMIPSUM_HTML_10_PARAGRAPHS)
+
+
+def set_image(obj):
+    if IDexterityContent.providedBy(obj):
+        from plone.namedfile.file import NamedBlobImage
+        filename = os.path.join(os.path.dirname(__file__), u'image.png')
+        obj.image.image = NamedBlobImage(
+            data=open(filename, 'r').read(),
+            filename=filename
+        )
+    else:
+        filename = os.path.join(os.path.dirname(__file__), u'image.png')
+        obj.setImage(open(filename, 'r').read())
+
+
+def set_file(obj):
+    if IDexterityContent.providedBy(obj):
+        from plone.namedfile.file import NamedBlobFile
+        filename = os.path.join(os.path.dirname(__file__), u'file.pdf')
+        obj.image.image = NamedBlobFile(
+            data=open(filename, 'r').read(),
+            filename=filename
+        )
+    else:
+        filename = os.path.join(os.path.dirname(__file__), u'file.pdf')
+        obj.setFile(open(filename, 'r').read())
 
 
 def publish(content):
@@ -72,13 +101,28 @@ def step_setup_content(context):
     publish(portal.collection)
     portal.collection.reindexObject()
 
+    # Folder
     portal.invokeFactory('Folder', id='folder', title='Folder')
+    set_description(portal.folder)
     publish(portal.folder)
-    portal.invokeFactory('Link', id='link', title='Link')
-    publish(portal.link)
-    portal.invokeFactory('Image', id='image', title='Image')
-    publish(portal.image)
-    portal.invokeFactory('File', id='file', title='File')
-    publish(portal.file)
+
+    # Event
     portal.invokeFactory('Event', id='event', title='Event')
+    set_description(portal.event)
     publish(portal.event)
+
+    # Link
+    portal.invokeFactory('Link', id='link', title='Link')
+    set_description(portal.link)
+    portal.link.remoteUrl = 'http://plone.org'
+    publish(portal.link)
+
+    # Image
+    portal.invokeFactory('Image', id='image', title='Image')
+    set_description(portal.image)
+    set_image(portal.image)
+
+    # File
+    portal.invokeFactory('File', id='file', title='File')
+    set_description(portal.file)
+    set_file(portal.file)

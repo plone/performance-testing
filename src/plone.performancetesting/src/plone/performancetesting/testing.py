@@ -1,3 +1,5 @@
+from Products.CMFCore.utils import getToolByName
+from zope.component.hooks import getSite
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import applyProfile
 from plone.app.testing import PLONE_FIXTURE
@@ -24,6 +26,10 @@ class PloneperformancetestingLayer(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'plone.performancetesting:default')
+        portal = getSite()
+        wf_tool = getToolByName(portal, "portal_workflow")
+        wf_tool.setDefaultChain("simple_publication_workflow")
+
 
 PLONE_PERFORMANCETESTING_FIXTURE = PloneperformancetestingLayer()
 PLONE_PERFORMANCETESTING_INTEGRATION_TESTING = IntegrationTesting(
