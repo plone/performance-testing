@@ -2,10 +2,21 @@
 Plone Performance Testing
 ==============================================================================
 
+Run buildout::
 
   $ python bootstrap-buildout.py
-  $ bin/buildout 
+  $ bin/buildout
 
+Start Instance::
+
+  $ bin/instance start
+
+Run jMeter Test::
+
+  $ jmeter -n -t PloneTestplan.jmx
+
+Miscellaneous
+-------------
 
 Performance Sprints:
 
