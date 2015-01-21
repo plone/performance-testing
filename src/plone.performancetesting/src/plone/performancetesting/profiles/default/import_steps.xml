@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="plone.performancetesting" version="20150101-01"
+              handler="plone.performancetesting.setuphandlers.step_setup_content"
+              title="plone.performancetesting content">
+    plone.performancetesting installation step.
+ </import-step>
+</import-steps>

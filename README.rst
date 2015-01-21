@@ -3,6 +3,8 @@ Plone Performance Testing
 ==============================================================================
 
 
+  $ python bootstrap-buildout.py
+  $ bin/buildout 
 
 
 Performance Sprints:
